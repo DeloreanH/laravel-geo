@@ -1,6 +1,6 @@
 {
-  "name": "deloreanh/laravel-geo",
-  "description": "forked Spatial OGC objects integration for Laravel 5.*",
+  "name": "elevenlab/laravel-geo",
+  "description": "Spatial OGC objects integration for Laravel 5.*",
   "license": "GNU GPL v3.0",
   "keywords": ["geospatial", "laravel", "spatial", "geo"],
   "authors": [
