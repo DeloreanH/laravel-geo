@@ -22,12 +22,21 @@ Thanks to https://github.com/njbarrett/laravel-postgis for its original work.
 
 # Installation & Configuration
 
-1) Install using composer
+1) add to compose.json
 
-```bash
-$ composer require elevenlab/laravel-geo
+```text
+ "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/DeloreanH/laravel-geo"
+        }
+    ],
+    "require": {
+   
+        "elevenlab/laravel-geo": "dev-master as 1.1"
+    },
 ```
-then replace the vendor/elevenlab/src with the forked src folder.
+
 
 2) Replace under the Service Providers section ('providers' array) in config/app.php this line
 
