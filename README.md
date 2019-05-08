@@ -1,3 +1,8 @@
+# Geo Laravel
+This is a fork from [elevenlab/laravel-geo](https://github.com/eleven-lab/laravel-geo) with some minor modifications for compatibility with Laravel 5.4+
+
+> Note: In this version geometry column type is used for PostGIS instead of geography
+
 # Features
 - GeoSpatial integration on Laravel 5.2+:
     - Create geospatial columns using Schema and migrations
@@ -9,13 +14,17 @@
     - MySql: Extension for Spatial Data (geography types)
 
 Thanks to https://github.com/njbarrett/laravel-postgis for its original work.
+# Fork fix and changes
+    - use postgis geometry column instead of geography
+    - fix compatibility with recent laravel
+    - fix Multipoint typo ($geotypes)
 
 # Installation & Configuration
 
 1) Install using composer
 
 ```bash
-$ composer require elevenlab/laravel-geo
+$ composer require deloreanh/laravel-geo
 ```
 
 2) Replace under the Service Providers section ('providers' array) in config/app.php this line
@@ -27,13 +36,13 @@ Illuminate\Database\DatabaseServiceProvider::class,
 with this one:
 
 ```php
-ElevenLab\GeoLaravel\DatabaseServiceProvider::class
+DeloreanH\GeoLaravel\DatabaseServiceProvider::class
 ```
 
 3) If you need it, under the Alias section ('aliases' array) in config/app.php add this line:
 
 ```php
-'GeoModel'      => ElevenLab\GeoLaravel\Model::class,
+'GeoModel'      => DeloreanH\GeoLaravel\Model::class,
 ```
 
 # Quick Documentation
@@ -63,7 +72,7 @@ In order to handle dinamically geospatial attributes during CRUD operations, you
 ```php
 <?php namespace App;
 
-use ElevenLab\GeoLaravel\Eloquent\Model as GeoModel;
+use DeloreanH\GeoLaravel\Eloquent\Model as GeoModel;
 
 class Country extends GeoModel
 {
@@ -83,9 +92,9 @@ class Country extends GeoModel
 
 ```php
 <?php
-use ElevenLab\GeoLaravel\DataTypes\Point as Point;
-use ElevenLab\GeoLaravel\DataTypes\Linestring as Linestring;
-use ElevenLab\GeoLaravel\DataTypes\Polygon as Polygon;
+use DeloreanH\GeoLaravel\PHPOGC\DataTypes\Point as Point;
+use DeloreanH\GeoLaravel\PHPOGC\DataTypes\Linestring as Linestring;
+use DeloreanH\GeoLaravel\PHPOGC\DataTypes\Polygon as Polygon;
 
 $rome = new Point(41.9102415,12.3959149);
 $milan = new Point(45.4628328,9.1076927);
@@ -109,11 +118,11 @@ $italy = Country::create([
 ]);
 
 $italy = Country::whereName('Italy')->first();
-echo get_class($italy->capital); // ElevenLab\PHPOGC\DataTypes\Point
-echo get_class($italy->national_bounds); // ElevenLab\PHPOGC\DataTypes\Polygon
-echo get_class($italy->regions_bounds); // ElevenLab\PHPOGC\DataTypes\Polygon
-echo get_class($italy->regions_capitals); // ElevenLab\PHPOGC\DataTypes\MultiPoint
-echo get_class($italy->highway); // ElevenLab\PHPOGC\DataTypes\LineString
+echo get_class($italy->capital); // DeloreanH\PHPOGC\DataTypes\Point
+echo get_class($italy->national_bounds); // DeloreanH\PHPOGC\DataTypes\Polygon
+echo get_class($italy->regions_bounds); // DeloreanH\PHPOGC\DataTypes\Polygon
+echo get_class($italy->regions_capitals); // DeloreanH\PHPOGC\DataTypes\MultiPoint
+echo get_class($italy->highway); // DeloreanH\PHPOGC\DataTypes\LineString
 ```
 
 ## Builds queries
@@ -182,10 +191,21 @@ Given an illuminate Query Builder object, you can use:
 
 - orWhereNotOverlaps
 
+# Small Example of queries
+    - Spatial analysis functions are implemented using Eloquent Local Scopes.
+    
+    //local scope on the model
+     public function scopeContains($query,$geometry,$point)
+        {
+            return $query->whereContains($geometry,$point);
+        }
+        
+     // on the controller, ('geometry') reference to the spatial column on the table, the $point is an object of DeloreanH\PHPOGC\DataTypes\Point
+     $polygon = App\Model::contains('geometry',$point)->get();
 
 # ToDo
 - improve documentation
     - add examples for "Build queries" section
     - add manual installation guide
-- add missing ST_functionsù
+- add missing ST_functions
 - add unit tests

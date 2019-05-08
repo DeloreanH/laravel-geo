@@ -78,19 +78,19 @@ class PostgresGrammar extends IlluminatePostgresGrammar
     }
 
     /**
-     * Create the column definition for a MultiPolygon type.
+     * Create the column definition for a spatial Geometry type.
      *
      * @param  \Illuminate\Support\Fluent  $column
-     * @throws \Exception
+     * @return string
      */
     protected function typeGeometry(Fluent $column)
     {
-        throw new \Exception('Geometry data type not supported for current database engine.');
+        return $this->formatPostGisType($column->type);
     }
 
 
     private function formatPostGisType($type)
     {
-        return "GEOGRAPHY($type, 4326)";
+        return "GEOMETRY($type, 4326)";
     }
 }

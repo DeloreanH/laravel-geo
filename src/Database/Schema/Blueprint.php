@@ -11,12 +11,13 @@ class Blueprint extends IlluminateBlueprint
 {
 
     /**
-     * @param $column
+     * @param  string  $column
+     * @param  int|null  $srid
      * @return \Illuminate\Support\Fluent
      */
-    public function point($column)
+    public function point($column, $srid = null)
     {
-        return $this->addColumn('point', $column);
+        return $this->addColumn('point', $column, compact('srid'));
     }
 
     /**
