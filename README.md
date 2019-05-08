@@ -18,6 +18,7 @@ Thanks to https://github.com/njbarrett/laravel-postgis for its original work.
     - use postgis geometry column instead of geography
     - fix compatibility with recent laravel
     - fix Multipoint typo ($geotypes)
+    - fix MysqlGrammar Access Level
 
 # Installation & Configuration
 
@@ -26,6 +27,7 @@ Thanks to https://github.com/njbarrett/laravel-postgis for its original work.
 ```bash
 $ composer require elevenlab/laravel-geo
 ```
+then replace the vendor/elevenlab/src with the forked src folder.
 
 2) Replace under the Service Providers section ('providers' array) in config/app.php this line
 
