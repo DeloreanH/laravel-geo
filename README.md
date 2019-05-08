@@ -24,7 +24,7 @@ Thanks to https://github.com/njbarrett/laravel-postgis for its original work.
 1) Install using composer
 
 ```bash
-$ composer require deloreanh/laravel-geo
+$ composer require elevenlab/laravel-geo
 ```
 
 2) Replace under the Service Providers section ('providers' array) in config/app.php this line
@@ -36,13 +36,13 @@ Illuminate\Database\DatabaseServiceProvider::class,
 with this one:
 
 ```php
-DeloreanH\GeoLaravel\DatabaseServiceProvider::class
+ElevenLab\GeoLaravel\DatabaseServiceProvider::class
 ```
 
 3) If you need it, under the Alias section ('aliases' array) in config/app.php add this line:
 
 ```php
-'GeoModel'      => DeloreanH\GeoLaravel\Model::class,
+'GeoModel'      => ElevenLab\GeoLaravel\Model::class,
 ```
 
 # Quick Documentation
@@ -72,7 +72,7 @@ In order to handle dinamically geospatial attributes during CRUD operations, you
 ```php
 <?php namespace App;
 
-use DeloreanH\GeoLaravel\Eloquent\Model as GeoModel;
+use ElevenLab\GeoLaravel\Eloquent\Model as GeoModel;
 
 class Country extends GeoModel
 {
@@ -92,9 +92,9 @@ class Country extends GeoModel
 
 ```php
 <?php
-use DeloreanH\GeoLaravel\PHPOGC\DataTypes\Point as Point;
-use DeloreanH\GeoLaravel\PHPOGC\DataTypes\Linestring as Linestring;
-use DeloreanH\GeoLaravel\PHPOGC\DataTypes\Polygon as Polygon;
+use ElevenLab\GeoLaravel\PHPOGC\DataTypes\Point as Point;
+use ElevenLab\GeoLaravel\PHPOGC\DataTypes\Linestring as Linestring;
+use ElevenLab\GeoLaravel\PHPOGC\DataTypes\Polygon as Polygon;
 
 $rome = new Point(41.9102415,12.3959149);
 $milan = new Point(45.4628328,9.1076927);
@@ -118,11 +118,11 @@ $italy = Country::create([
 ]);
 
 $italy = Country::whereName('Italy')->first();
-echo get_class($italy->capital); // DeloreanH\PHPOGC\DataTypes\Point
-echo get_class($italy->national_bounds); // DeloreanH\PHPOGC\DataTypes\Polygon
-echo get_class($italy->regions_bounds); // DeloreanH\PHPOGC\DataTypes\Polygon
-echo get_class($italy->regions_capitals); // DeloreanH\PHPOGC\DataTypes\MultiPoint
-echo get_class($italy->highway); // DeloreanH\PHPOGC\DataTypes\LineString
+echo get_class($italy->capital); // ElevenLab\PHPOGC\DataTypes\Point
+echo get_class($italy->national_bounds); // ElevenLab\PHPOGC\DataTypes\Polygon
+echo get_class($italy->regions_bounds); // ElevenLab\PHPOGC\DataTypes\Polygon
+echo get_class($italy->regions_capitals); // ElevenLab\PHPOGC\DataTypes\MultiPoint
+echo get_class($italy->highway); // ElevenLab\PHPOGC\DataTypes\LineString
 ```
 
 ## Builds queries
@@ -200,7 +200,7 @@ Given an illuminate Query Builder object, you can use:
             return $query->whereContains($geometry,$point);
         }
         
-     // on the controller, ('geometry') reference to the spatial column on the table, the $point is an object of DeloreanH\PHPOGC\DataTypes\Point
+     // on the controller, ('geometry') reference to the spatial column on the table, the $point is an object of ElevenLab\PHPOGC\DataTypes\Point
      $polygon = App\Model::contains('geometry',$point)->get();
 
 # ToDo
